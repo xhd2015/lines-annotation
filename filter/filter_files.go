@@ -3,22 +3,15 @@ package filter
 import (
 	"github.com/xhd2015/lines-annotation/model"
 	"github.com/xhd2015/lines-annotation/model/filter"
-	path_filter "github.com/xhd2015/lines-annotation/path/filter"
 )
 
 func FilterFiles(project *model.ProjectAnnotation, opts *filter.Options) {
-	if opts == nil {
+	checker := NewChecker(opts)
+	if checker == nil {
 		return
 	}
-	pathFilter := path_filter.NewFileFilter(opts.Include, opts.Exclude)
 	FilterFilesWithCheck(project, func(file model.RelativeFile) bool {
-		if !opts.MatchSuffix(string(file)) {
-			return false
-		}
-		if !pathFilter.MatchFile(string(file)) {
-			return false
-		}
-		return true
+		return checker.MatchFile(string(file))
 	})
 }
 

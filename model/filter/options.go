@@ -10,7 +10,7 @@ type Options struct {
 	Exclude []string
 }
 
-// Deprecated: use OptionsV2 instead
+// Deprecated: use Options instead
 type LegacyOptions struct {
 	Suffix        []string // include .go
 	ExcludeSuffix []string // exclude _test.go
