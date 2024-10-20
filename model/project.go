@@ -58,12 +58,20 @@ const (
 func (c *ProjectAnnotation) Has(annotationType AnnotationType) bool {
 	return c.Types[annotationType]
 }
+
 func (c *ProjectAnnotation) MustHave(reason string, annotationTypes ...AnnotationType) {
+	if err := c.ShouldHave(reason, annotationTypes...); err != nil {
+		panic(err)
+	}
+}
+
+func (c *ProjectAnnotation) ShouldHave(reason string, annotationTypes ...AnnotationType) error {
 	for _, annType := range annotationTypes {
 		if !c.Types[annType] {
-			panic(fmt.Errorf("%s requires %s", reason, annType))
+			return fmt.Errorf("%s requires %s", reason, annType)
 		}
 	}
+	return nil
 }
 
 func (c *ProjectAnnotation) Set(annotationType AnnotationType) {

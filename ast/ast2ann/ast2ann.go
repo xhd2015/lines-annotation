@@ -32,7 +32,7 @@ func CollectBlockProfiles(modPath string, astInfo ast_load.LoadInfo) (coverage.B
 
 		cover.RangeBlocks(fset, f.Ast(), f.Content(), func(insertPos, pos, end token.Pos, numStmts int, basicStmts []ast.Stmt) {
 			profile[pkgFile] = append(profile[pkgFile], &coverage.BlockStats{
-				Block: getBlock(fset, pos, end),
+				Block: GetBlock(fset, pos, end),
 			})
 		})
 		return true
@@ -48,7 +48,7 @@ func slashlizePath(path string) string {
 	return strings.ReplaceAll(path, string(filepath.Separator), "/")
 }
 
-func getBlock(fset *token.FileSet, pos, end token.Pos) *model.Block {
+func GetBlock(fset *token.FileSet, pos, end token.Pos) *model.Block {
 	posBegin := fset.Position(pos)
 	posEnd := fset.Position(end)
 	return &model.Block{
