@@ -29,8 +29,8 @@ github.com/xhd2015/go-objpath v0.0.0-20220820085723-d7e6bd98f5c7/go.mod h1:kr5we
 github.com/xhd2015/go-objpath v0.0.1 h1:BKbP6GTrYHUUgT/FbQAqp6Wy8b0DA13ww+YAFjP4mTk=
 github.com/xhd2015/go-objpath v0.0.1/go.mod h1:kr5weGR7DdeWPHrZM/PIEU6UgjLMSqCOfiadbrUJ7tg=
 github.com/xhd2015/xgo v1.0.40/go.mod h1:LJxlcYSaXo/9YpsnB3yHh9NHe7BRettYCytaNGWY2BE=
-github.com/xhd2015/xgo v1.0.51-0.20241102102531-8996d11f4f17 h1:z1Idgn9yvkuckyxCtL3S+LwUALeoBpVsFt1LjMqwU1o=
-github.com/xhd2015/xgo v1.0.51-0.20241102102531-8996d11f4f17/go.mod h1:LJxlcYSaXo/9YpsnB3yHh9NHe7BRettYCytaNGWY2BE=
+github.com/xhd2015/xgo v1.0.51-0.20241102105517-b55990d76807 h1:74yFAGaOvULQdEC8x360qw3N0Dn3eejCdWVGvSlQwcA=
+github.com/xhd2015/xgo v1.0.51-0.20241102105517-b55990d76807/go.mod h1:LJxlcYSaXo/9YpsnB3yHh9NHe7BRettYCytaNGWY2BE=
 github.com/yuin/goldmark v1.4.1/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=

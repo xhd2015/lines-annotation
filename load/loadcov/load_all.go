@@ -37,7 +37,7 @@ func LoadAll(opts LoadAllOptions) (*model.ProjectAnnotation, error) {
 	if len(args) == 0 {
 		args = []string{modPath + "/..."}
 	}
-	files, err := goinfo.ListRelatvieFiles(projectDir, args)
+	files, err := goinfo.ListRelativeFiles(projectDir, args)
 	if err != nil {
 		return nil, err
 	}

@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/xhd2015/gitops v0.0.9
 	github.com/xhd2015/go-coverage v1.0.44
-	github.com/xhd2015/xgo v1.0.51-0.20241102102531-8996d11f4f17
+	github.com/xhd2015/xgo v1.0.51-0.20241102105517-b55990d76807
 )
 
 require (
