@@ -36,7 +36,6 @@ func LoadLineChangesWithFilter(gitDir string, commitHash string, compareCommitHa
 		return nil, err
 	}
 
-	// diff changes
 	changes, err := line.CollectChanges(changedFilesRanger)
 	if err != nil {
 		return nil, err
@@ -55,7 +54,7 @@ func LoadLineChangesWithFilter(gitDir string, commitHash string, compareCommitHa
 		if filter != nil && !filter(file) {
 			continue
 		}
-		fileAnn := model.FileAnnotation{
+		fileAnn := &model.FileAnnotation{
 			ChangeDetail: fd,
 		}
 
@@ -64,9 +63,9 @@ func LoadLineChangesWithFilter(gitDir string, commitHash string, compareCommitHa
 				fileAnn.LineChanges = changes[file]
 			}
 		}
-
-		files[model.RelativeFile(file)] = &fileAnn
+		files[model.RelativeFile(file)] = fileAnn
 	}
+
 	return &model.ProjectAnnotation{
 		Files: files,
 		Types: map[model.AnnotationType]bool{

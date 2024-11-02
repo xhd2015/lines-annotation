@@ -2,8 +2,6 @@ package ast2ann
 
 import (
 	"go/token"
-	"path/filepath"
-	"strings"
 
 	"go/ast"
 
@@ -11,6 +9,7 @@ import (
 	ast_load "github.com/xhd2015/lines-annotation/ast"
 	"github.com/xhd2015/lines-annotation/model"
 	"github.com/xhd2015/lines-annotation/model/coverage"
+	"github.com/xhd2015/xgo/support/fileutil"
 )
 
 func CollectBlockProfilesNoModPath(astInfo ast_load.LoadInfo) (coverage.BinaryProfile, error) {
@@ -25,7 +24,7 @@ func CollectBlockProfiles(modPath string, astInfo ast_load.LoadInfo) (coverage.B
 			return true
 		}
 		// pkg file
-		pkgFile := slashlizePath(f.RelPath())
+		pkgFile := fileutil.Slashlize(f.RelPath())
 		if modPath != "" {
 			pkgFile = modPath + "/" + pkgFile
 		}
@@ -39,13 +38,6 @@ func CollectBlockProfiles(modPath string, astInfo ast_load.LoadInfo) (coverage.B
 	})
 	profile.SortAll()
 	return profile, nil
-}
-
-func slashlizePath(path string) string {
-	if filepath.Separator == '/' {
-		return path
-	}
-	return strings.ReplaceAll(path, string(filepath.Separator), "/")
 }
 
 func GetBlock(fset *token.FileSet, pos, end token.Pos) *model.Block {

@@ -5,6 +5,8 @@ type StringSet = map[string]bool
 // FuncID and BlockID are globally unique within a file and a commit
 type FuncID = BlockID
 
+type FuncInfoMapping map[RelativeFile][]*FuncAnnotation
+
 type FuncAnnotation struct {
 	Block         *Block `json:"block,omitempty"`
 	Name          string `json:"name,omitempty"`

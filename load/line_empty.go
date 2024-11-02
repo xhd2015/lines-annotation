@@ -4,6 +4,7 @@ import (
 	"github.com/xhd2015/go-coverage/line"
 	"github.com/xhd2015/lines-annotation/ast"
 	"github.com/xhd2015/lines-annotation/model"
+	"github.com/xhd2015/xgo/support/fileutil"
 )
 
 func LoadLineEmptyFromAstInfo(astLoadInfo ast.LoadInfo) *model.ProjectAnnotation {
@@ -19,7 +20,7 @@ func LoadLineEmptyFromAstInfo(astLoadInfo ast.LoadInfo) *model.ProjectAnnotation
 			}
 		}
 
-		project.Files[model.RelativeFile(f.RelPath())] = &model.FileAnnotation{
+		project.Files[model.RelativeFile(fileutil.Slashlize(f.RelPath()))] = &model.FileAnnotation{
 			Lines: lines,
 		}
 		return true

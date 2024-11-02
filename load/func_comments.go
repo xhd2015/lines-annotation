@@ -5,13 +5,14 @@ import (
 
 	"github.com/xhd2015/lines-annotation/ast"
 	"github.com/xhd2015/lines-annotation/model"
+	"github.com/xhd2015/xgo/support/fileutil"
 )
 
 func FuncCommentsFromAstInfoMapping(astLoadInfo ast.LoadInfo, mapping map[model.RelativeFile][]*model.FuncAnnotation) *model.ProjectAnnotation {
 	files := make(model.FileAnnotationMapping)
 
 	astLoadInfo.RangeFiles(func(f ast.File) bool {
-		relFile := model.RelativeFile(f.RelPath())
+		relFile := model.RelativeFile(fileutil.Slashlize(f.RelPath()))
 		funcs := mapping[relFile]
 		if len(funcs) == 0 {
 			return true

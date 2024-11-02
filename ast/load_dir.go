@@ -1,10 +1,8 @@
 package ast
 
 import (
-	"go/parser"
 	"go/token"
 	"io/fs"
-	"os"
 	"strings"
 
 	"github.com/xhd2015/lines-annotation/path/filter"
@@ -69,6 +67,7 @@ func (c *loadDirOptions) Load(dir string) (LoadInfo, error) {
 
 	fset := token.NewFileSet()
 	var files []*file
+
 	err := fileutil.WalkRelative(dir, func(path, relPath string, d fs.DirEntry) error {
 		if !isGoFile(d) {
 			return nil
@@ -77,20 +76,13 @@ func (c *loadDirOptions) Load(dir string) (LoadInfo, error) {
 		if !filter.MatchFile(relPath) {
 			return nil
 		}
-		content, err := os.ReadFile(path)
+		file, err := loadFile(fset, path, relPath)
 		if err != nil {
 			return err
 		}
-		ast, syntaxErr := parser.ParseFile(fset, relPath, content, parser.ParseComments)
-		if err != nil {
-			return nil
+		if file != nil {
+			files = append(files, file)
 		}
-		files = append(files, &file{
-			relPath:   relPath,
-			ast:       ast,
-			content:   content,
-			syntaxErr: syntaxErr,
-		})
 		return nil
 	})
 	if err != nil {

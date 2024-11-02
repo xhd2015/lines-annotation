@@ -20,7 +20,10 @@ func (s *singleFileLoadInfo) RangeFiles(handler func(f File) bool) {
 }
 
 func LoadCode(relPath string, code []byte) (LoadInfo, error) {
-	fset := token.NewFileSet()
+	return loadCode(token.NewFileSet(), relPath, code)
+}
+
+func loadCode(fset *token.FileSet, relPath string, code []byte) (LoadInfo, error) {
 	ast, err := parseCode(relPath, code, fset)
 	if err != nil {
 		return nil, err

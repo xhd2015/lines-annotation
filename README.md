@@ -10,6 +10,13 @@ The following packages define different operations on the annotation structure d
 - [map](./map): map from one form to another, for example, prepend path to files
 - [compute](./compute): compute derived annotations from primitvie annotations and other derived annotations
 
+## package `model`
+Generalize annotation data structure.
+
+This helps store and analyse annotation data unified.
+
+In reality, it reduces table redundancy.
+
 # Why Lines Annoation?
 I find there are dozens of representations of code coverage, e.g. xml in java, plain text in golang. They correspond to different language-specific structures, which makes it quite difficult to develop a general coverage review UI.
 
