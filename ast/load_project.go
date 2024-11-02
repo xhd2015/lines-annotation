@@ -3,7 +3,7 @@ package ast
 import "github.com/xhd2015/xgo/support/goinfo"
 
 func LoadProject(dir string, args []string) (LoadInfo, error) {
-	files, err := goinfo.ListRelatvieFiles(dir, args)
+	files, err := goinfo.ListRelativeFiles(dir, args)
 	if err != nil {
 		return nil, err
 	}
