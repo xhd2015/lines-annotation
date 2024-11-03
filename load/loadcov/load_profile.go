@@ -17,7 +17,15 @@ import (
 )
 
 func LoadCoverageProfileFiles(modPath string, files []string, excludePrefix []string) (*ann_model.ProjectAnnotation, error) {
-	res, err := ParseProfiles(files, excludePrefix)
+	return loadProfiles(modPath, files, excludePrefix, false)
+}
+
+func LoadOptionalCoverageProfileFiles(modPath string, files []string, excludePrefix []string) (*ann_model.ProjectAnnotation, error) {
+	return loadProfiles(modPath, files, excludePrefix, true)
+}
+
+func loadProfiles(modPath string, files []string, excludePrefix []string, allowMissing bool) (*ann_model.ProjectAnnotation, error) {
+	res, err := parseProfiles(files, excludePrefix, allowMissing)
 	if err != nil {
 		return nil, err
 	}
@@ -29,10 +37,17 @@ func LoadCoverageProfileFiles(modPath string, files []string, excludePrefix []st
 }
 
 func ParseProfiles(files []string, excludePrefix []string) ([]*coverage.CovLine, error) {
+	return parseProfiles(files, excludePrefix, false)
+}
+
+func parseProfiles(files []string, excludePrefix []string, allowMissing bool) ([]*coverage.CovLine, error) {
 	covs := make([][]*coverage.CovLine, 0, len(files))
 	for _, file := range files {
 		content, err := os.ReadFile(file)
 		if err != nil {
+			if allowMissing && os.IsNotExist(err) {
+				continue
+			}
 			return nil, err
 		}
 		_, cov := coverage.Parse(string(content))

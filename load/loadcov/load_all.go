@@ -19,14 +19,23 @@ type LoadAllOptions struct {
 	Dir      string
 	Args     []string
 	Profiles []string
+	Ref      string
 	DiffBase string
 
 	// file filter
 	Include []string
 	Exclude []string
+
+	OnlyChangedFiles bool
 }
 
 func LoadAll(opts LoadAllOptions) (*model.ProjectAnnotation, error) {
+	if opts.Ref == "" {
+		return nil, fmt.Errorf("requries ref")
+	}
+	if opts.DiffBase == "" {
+		return nil, fmt.Errorf("requires diffBase")
+	}
 	projectDir := opts.Dir
 	modPath, err := goinfo.GetModPath(projectDir)
 	if err != nil {
@@ -87,17 +96,22 @@ func LoadAll(opts LoadAllOptions) (*model.ProjectAnnotation, error) {
 		})
 	}
 
-	gitDiff, err := LoadGitDiff(projectDir, files, opts.DiffBase)
+	gitDiff, err := LoadGitDiff(projectDir, opts.Ref, opts.DiffBase, files)
 	if err != nil {
 		return nil, err
 	}
 
 	project := merge.MergeAnnotations(staticInfo, profileData, gitDiff)
+	compute.Changed_ForLineFromChanges(project)
+
 	compute.BlockID_ForLine(project)
 	compute.ExecLabels_Block2Line(project)
 	compute.Uncoverable_ForLine(project)
-	compute.Changed_ForLineFromChanges(project)
 	compute.EnsureCoverageLabels_ForLine(project, nil)
 
+	project = ann_filter.ReserveForLineView(project, &ann_filter.ReserveOptions{
+		ChangedOnly:           opts.OnlyChangedFiles,
+		MissingDiffFileOption: ann_filter.MissingDiffOption_AsUnchanged,
+	})
 	return project, nil
 }

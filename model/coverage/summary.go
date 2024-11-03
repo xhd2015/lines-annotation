@@ -21,7 +21,8 @@ type Summary struct {
 type Detail struct {
 	// default
 	Total       *Item `json:"total,omitempty"`
-	Incrimental *Item `json:"incrimental,omitempty"`
+	Incrimental *Item `json:"incrimental,omitempty"` // typo, cannot easily be removed
+	Incremental *Item `json:"incremental,omitempty"`
 }
 
 type Item struct {

@@ -7,10 +7,10 @@ import (
 	"github.com/xhd2015/lines-annotation/model"
 )
 
-func LoadGitDiff(dir string, relFiles []string, diffBase string) (*model.ProjectAnnotation, error) {
+func LoadGitDiff(dir string, ref string, diffBase string, relFiles []string) (*model.ProjectAnnotation, error) {
 	if diffBase == "" {
 		return nil, fmt.Errorf("requires diffBase")
 	}
 
-	return git.LoadFiles(dir, relFiles, diffBase)
+	return git.LoadFiles(dir, ref, diffBase, relFiles)
 }

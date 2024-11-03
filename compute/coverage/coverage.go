@@ -18,6 +18,7 @@ type ComputeOptions struct {
 
 // depends: Line.CoverageLabels
 func ComputeCoverageSummary(project *model.ProjectAnnotation, opts *ComputeOptions) map[string]*coverage.Summary {
+	compute.LabelsOnTheFly(project)
 	if opts == nil {
 		opts = &ComputeOptions{}
 	}
