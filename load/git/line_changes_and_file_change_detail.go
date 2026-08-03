@@ -91,6 +91,9 @@ func LoadLineChanges(gitDir string, commitHash string, compareCommitHash string,
 		if fileFilter != nil && !fileFilter.MatchFile(file) {
 			return false
 		}
+		if opts != nil && filter.HasExcludedPathSegment(file, opts.ExcludePathSegments) {
+			return false
+		}
 		return true
 	})
 }
