@@ -10,8 +10,8 @@ type Options struct {
 	Exclude []string
 
 	// ExcludePathSegments drops files whose path has any exact path-component
-	// matching a listed name (e.g. "vendor", "node_modules"). Callers supply
-	// the list; the library does not hardcode defaults.
+	// matching a listed name (e.g. "vendor", "node_modules"). Generic checkers
+	// use this list verbatim; policy entry points add DefaultExcludePathSegments.
 	ExcludePathSegments []string
 }
 

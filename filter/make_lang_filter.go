@@ -6,18 +6,20 @@ import (
 )
 
 func MakeFilter(profileLang lang.ProfileLanguage) *filter.Options {
+	opts := &filter.Options{ExcludePathSegments: filter.DefaultExcludePathSegments()}
 	if profileLang.IsGo() {
-		return &filter.Options{
-			Suffix:        []string{".go"},
-			ExcludeSuffix: []string{"_test.go"},
-			Exclude:       []string{"vendor"},
-		}
+		opts.Suffix = []string{".go"}
+		opts.ExcludeSuffix = []string{"_test.go"}
+	} else if profileLang == lang.ProfileLanguage_Js {
+		opts.Suffix = []string{".js", ".ts"}
 	}
-	if profileLang == lang.ProfileLanguage_Js {
-		return &filter.Options{
-			Suffix:  []string{".js", ".ts"},
-			Exclude: []string{"node_modules"},
-		}
-	}
-	return nil
+	return opts
+}
+
+// MakeProjectFilter intersects system/language rules with project rules.
+func MakeProjectFilter(profileLang lang.ProfileLanguage, include, exclude []string) *filter.Options {
+	opts := MakeFilter(profileLang)
+	opts.Include = append([]string(nil), include...)
+	opts.Exclude = append([]string(nil), exclude...)
+	return opts
 }

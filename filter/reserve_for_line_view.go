@@ -21,6 +21,15 @@ type ReserveOptions struct {
 	MissingDiffFileOption MissingDiffFileOption
 }
 
+// ReserveForLineViewChecked returns incomplete annotations as an error instead
+// of panicking. The legacy API remains for source compatibility.
+func ReserveForLineViewChecked(project *model.ProjectAnnotation, opts *ReserveOptions) (*model.ProjectAnnotation, error) {
+	if err := model.ValidateForConsumption(project, false); err != nil {
+		return nil, err
+	}
+	return ReserveForLineView(project, opts), nil
+}
+
 func ReserveForLineView(project *model.ProjectAnnotation, opts *ReserveOptions) *model.ProjectAnnotation {
 	if project == nil {
 		return nil

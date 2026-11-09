@@ -16,8 +16,24 @@ type ComputeOptions struct {
 	NeedUncoveredList bool
 }
 
+// ComputeCoverageSummaryChecked validates before the first derived mutation.
+func ComputeCoverageSummaryChecked(project *model.ProjectAnnotation, opts *ComputeOptions) (map[string]*coverage.Summary, error) {
+	if err := model.ValidateForConsumption(project, false); err != nil {
+		return nil, err
+	}
+	return computeCoverageSummary(project, opts), nil
+}
+
 // depends: Line.CoverageLabels
 func ComputeCoverageSummary(project *model.ProjectAnnotation, opts *ComputeOptions) map[string]*coverage.Summary {
+	result, err := ComputeCoverageSummaryChecked(project, opts)
+	if err != nil {
+		panic(err) // legacy contract; checked callers receive the same typed error
+	}
+	return result
+}
+
+func computeCoverageSummary(project *model.ProjectAnnotation, opts *ComputeOptions) map[string]*coverage.Summary {
 	compute.LabelsOnTheFly(project)
 	if opts == nil {
 		opts = &ComputeOptions{}

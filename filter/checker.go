@@ -1,6 +1,9 @@
 package filter
 
 import (
+	"path"
+	"strings"
+
 	"github.com/xhd2015/lines-annotation/model/filter"
 	path_filter "github.com/xhd2015/lines-annotation/path/filter"
 )
@@ -34,6 +37,7 @@ func (c *checker) MatchFile(file string) bool {
 	if c == nil {
 		return true
 	}
+	file = path.Clean(strings.ReplaceAll(file, "\\", "/"))
 	if !c.opts.MatchSuffix(file) {
 		return false
 	}
